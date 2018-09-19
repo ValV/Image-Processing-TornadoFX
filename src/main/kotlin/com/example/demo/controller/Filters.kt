@@ -1,6 +1,5 @@
 package com.example.demo.controller
 
-import com.example.demo.view.MainView
 import javafx.scene.image.Image
 import javafx.scene.image.PixelReader
 import javafx.scene.image.WritableImage
@@ -24,25 +23,26 @@ class Filters: Controller() {
 
         // Determine the color of each pixel in a specified row
         for (i in 0 until width) {
-            for (j in 0 until 250) {
+            for (j in 0 until height) {
                 val color = pixelReader.getColor(i, j)
-
                 pixelWriter.setColor(i, j, color.desaturate())
             }
         }
-        return result
+        return image
     }
 
-    fun makePixelsBrighter(image: PixelReader): WritableImage {
-        // Determine the color of each pixel in a specified row
-        for (i in 0 until 500) {
-            for (j in 0 until 250) {
-                val color = image.getColor(i, j)
+    fun makePixelsBrighter(image: WritableImage): WritableImage {
+        val pixelReader = image.pixelReader
+        val pixelWriter = image.pixelWriter
 
-                resultWriter.setColor(i, j, color.brighter())
+        // Determine the color of each pixel in a specified row
+        for (i in 0 until width) {
+            for (j in 0 until height) {
+                val color = pixelReader.getColor(i, j)
+                pixelWriter.setColor(i, j, color.brighter())
             }
         }
-        return result
+        return image
     }
 
     /**
